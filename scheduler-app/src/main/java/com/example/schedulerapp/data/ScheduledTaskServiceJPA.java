@@ -37,7 +37,7 @@ public class ScheduledTaskServiceJPA implements SchedulerTaskService {
         }
     }
 
-    //TODO think about exception handling for bad beers
+    //TODO think about exception handling for bad tasks
     @Override
     public ScheduledTask saveScheduledTask(ScheduledTask scheduledTask) {
         return schedulerTaskRepository.save(scheduledTask);
@@ -65,7 +65,7 @@ public class ScheduledTaskServiceJPA implements SchedulerTaskService {
         return schedulerTaskRepository.save(scheduledTask);
     }
 
-    //TODO implement this
+    //TODO implement patch update
     @Override
     public ScheduledTask update(Long id, Map<String, String> parameters) {
         if (parameters.containsKey("id") && Long.parseLong(parameters.get("id"))!=id) throw new BadIdException();

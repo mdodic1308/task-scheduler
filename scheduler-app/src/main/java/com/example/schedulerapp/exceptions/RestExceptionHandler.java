@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.Collections;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -23,6 +23,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadIdException.class)
     protected ResponseEntity<Object> handleBadId(
             BadIdException ex) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", Collections.singletonList(ex.getMessage()));
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
+    //TODO add body for validation exceptions
 }

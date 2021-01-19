@@ -3,10 +3,13 @@ package com.example.schedulerapp.web;
 import com.example.schedulerapp.data.ScheduledTask;
 import com.example.schedulerapp.data.SchedulerTaskService;
 import com.example.schedulerapp.exceptions.ResourceNotFoundException;
-import org.modelmapper.ModelMapper;
+import com.example.schedulerapp.executor.CustomExecutorService;
+import com.example.schedulerapp.executor.ExecutorThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,17 +20,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
 @RequestMapping("${scheduledTasksRelativePath}")
 public class SchedulerController {
     private static final String ID = "/{id}";
-    //TODO remove model mapper
-  //  @Autowired
-  //  private ModelMapper modelMapper;
+    @Autowired
+    ThreadPoolTaskScheduler threadPoolTaskScheduler;
     @Autowired
     private SchedulerTaskService scheduledTaskService;
+    @Autowired
+    private CustomExecutorService customExecutorService;
 
     @GetMapping
     public ResponseEntity<Iterable<ScheduledTask>> getScheduledTasks() {
@@ -35,10 +40,11 @@ public class SchedulerController {
         return new ResponseEntity<>(scheduledTasks, HttpStatus.OK);
     }
 
-    //TODO add validation
     @PostMapping
-    public ResponseEntity<ScheduledTask> insertScheduledTask(@RequestBody ScheduledTask scheduledTask) {
+    public ResponseEntity<ScheduledTask> insertScheduledTask(@RequestBody @Valid ScheduledTask scheduledTask) {
         ScheduledTask savedScheduledTask = scheduledTaskService.saveScheduledTask(scheduledTask);
+        threadPoolTaskScheduler.schedule(new ExecutorThread(savedScheduledTask.getCode()),
+                new CronTrigger(savedScheduledTask.getRecurrency()));
         return new ResponseEntity<>(savedScheduledTask, HttpStatus.CREATED);
     }
 
@@ -50,7 +56,8 @@ public class SchedulerController {
     }
 
     @PutMapping(value = ID)
-    public ResponseEntity<ScheduledTask> updateScheduledTask(@PathVariable Long id, @RequestBody ScheduledTask scheduledTask) {
+    public ResponseEntity<ScheduledTask> updateScheduledTask(@PathVariable Long id,
+            @RequestBody @Valid ScheduledTask scheduledTask) {
         ScheduledTask updatedScheduledTask = scheduledTaskService.update(id, scheduledTask);
         return new ResponseEntity<>(updatedScheduledTask, HttpStatus.OK);
     }
@@ -66,6 +73,7 @@ public class SchedulerController {
     @DeleteMapping(value = ID)
     public ResponseEntity<?> deleteScheduledTask(@PathVariable Long id) {
         scheduledTaskService.delete(id);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
