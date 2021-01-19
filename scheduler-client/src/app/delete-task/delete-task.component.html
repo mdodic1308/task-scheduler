@@ -1,0 +1,14 @@
+<div class="container">
+    <h1>
+      {{title}}
+    </h1>
+  
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" id="id" 
+          placeholder="Enter task ID" formControlName="id" />
+      </div>
+      <button class="btn btn-primary" type="submit">Delete task</button>
+    </form>
+  </div>

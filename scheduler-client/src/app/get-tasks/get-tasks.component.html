@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>
+    {{title}}
+  </h1>
+  <button class="btn btn-primary" type="submit" (click)="onSubmit()">Get all tasks</button>
+
+  <mat-table class="tasks-table mat-elevation-z8" [dataSource]="dataSource">
+  
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell class="name-cell"
+                  *matCellDef="let task">{{task.name}}</mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="recurrency">
+        <mat-header-cell *matHeaderCellDef>Recurrency</mat-header-cell>
+        <mat-cell class="recurrency-cell"
+                  *matCellDef="let task">{{task.recurrency}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="code">
+      <mat-header-cell *matHeaderCellDef>Code</mat-header-cell>
+      <mat-cell class="code-cell"
+                *matCellDef="let task">{{task.code}}</mat-cell>
+  </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    
+</mat-table>
+</div>

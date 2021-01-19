@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>
+      {{title}}
+    </h1>
+  
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" id="id" 
+          placeholder="Enter task ID" formControlName="id" />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" 
+          placeholder="Enter task name" formControlName="name" />
+      </div>
+  
+      <div class="form-group">
+        <label for="name">Recurrency</label>
+        <input type="text" class="form-control" id="recurrency" 
+          placeholder="Enter recurrency in cron format" formControlName="recurrency" />
+      </div>
+  
+      <div class="form-group">
+        <label for="code">Groovy code</label>
+        <textarea rows = "5" cols = "50" name = "code" class="form-control" id="code" 
+          placeholder="Enter Groovy script here" formControlName="code" ></textarea>
+      </div>
+  
+      <button class="btn btn-primary" type="submit">Update task</button>
+    </form>
+  </div>
