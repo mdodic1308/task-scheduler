@@ -8,7 +8,7 @@ import { TaskService } from '../task-service.service';
   styleUrls: ['./get-tasks.component.css']
 })
 export class GetAllTasksComponent{
-  title = 'Get scheduled task';
+  title = 'Get scheduled tasks';
   dataSource: TasksDataSource;
   displayedColumns = ["id", "name", "recurrency", "code"];
   constructor(
@@ -18,6 +18,6 @@ export class GetAllTasksComponent{
   }
 
   onSubmit() {
-    this.dataSource.loadTasks(1);
+    this.dataSource.loadTasks();
   }
 }

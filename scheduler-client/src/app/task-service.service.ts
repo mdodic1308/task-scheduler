@@ -2,30 +2,28 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { ScheduledTask } from './app.scheduled_task';
-import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
+  SCHEDULED_TASKS_PATH: string = '/api/scheduledTasks/';
     constructor(private http:HttpClient) {}
 
-    findTasks(
-        id:number, name = '', sortOrder = 'asc',
-        pageNumber = 0, pageSize = 3):  Observable<ScheduledTask[]> {
-        return this.http.get<ScheduledTask[]>('/api/scheduledTasks');
+    findTasks():  Observable<ScheduledTask[]> {
+        return this.http.get<ScheduledTask[]>(this.SCHEDULED_TASKS_PATH);
     }
 
     createTask(taskData : ScheduledTask):  Observable<ScheduledTask> {
-      return this.http.post<ScheduledTask>('/api/scheduledTasks', taskData);
+      return this.http.post<ScheduledTask>(this.SCHEDULED_TASKS_PATH, taskData);
     }
 
     updateTask(taskData : ScheduledTask):  Observable<ScheduledTask> {
-      return this.http.put<ScheduledTask>('/api/scheduledTasks/'+taskData.id, taskData);
+      return this.http.put<ScheduledTask>(this.SCHEDULED_TASKS_PATH + taskData.id, taskData);
     }
 
     deleteTask(id: number):  Observable<any> {
-      return this.http.delete<ScheduledTask>('/api/scheduledTasks/'+id);
+      return this.http.delete<ScheduledTask>(this.SCHEDULED_TASKS_PATH + id);
     }
 }

@@ -23,13 +23,10 @@ export class TasksDataSource implements DataSource<ScheduledTask> {
         this.loadingSubject.complete();
     }
 
-    loadTasks(id: number, filter = '',
-                sortDirection = 'asc', pageIndex = 0, pageSize = 3) {
-
+    loadTasks() {
         this.loadingSubject.next(true);
 
-        this.coursesService.findTasks(id, filter, sortDirection,
-            pageIndex, pageSize).pipe(
+        this.coursesService.findTasks().pipe(
             catchError(() => of([])),
             finalize(() => this.loadingSubject.next(false))
         )

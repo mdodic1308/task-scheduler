@@ -7,20 +7,20 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input type="text" class="form-control" id="id" 
+        <input type="number" class="form-control" id="id" 
           placeholder="Enter task ID" formControlName="id" />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" 
-          placeholder="Enter task name" formControlName="name" />
+          placeholder="Enter task name" formControlName="name"  maxlength="250"/>
       </div>
   
       <div class="form-group">
         <label for="name">Recurrency</label>
         <input type="text" class="form-control" id="recurrency" 
-          placeholder="Enter recurrency in cron format" formControlName="recurrency" />
+          placeholder="Enter recurrency in cron format" formControlName="recurrency"  maxlength="30"/>
       </div>
   
       <div class="form-group">
