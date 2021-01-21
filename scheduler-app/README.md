@@ -8,7 +8,7 @@ For overriding default configuration, you should pass the command line arguments
 --args='--name1=value1 --name2=value2'  
 , where 'name1' is the name and 'value1' is the value of the argument.  
 
-For example, this command (Linux) will start application on the port 8081, with thread pool with size of 2:
+For example, this command (Linux) will start application on the port 8085, with thread pool with size of 2:
 ./gradlew bootRun --args='--server.port=8085 --thread-pool.size=2'
 
 ## API consuming
