@@ -12,10 +12,11 @@ public class CronFormatValidator implements ConstraintValidator<CronFormatValida
     }
 
     @Override
-    public boolean isValid(String reccurency,
+    public boolean isValid(String recurrency,
             ConstraintValidatorContext cxt) {
         try {
-            CronExpression.parse(reccurency);
+            CronExpression.parse(recurrency);
+            System.out.println("STRING   "+ recurrency);
             return true;
         } catch (IllegalArgumentException e) {
             return false;

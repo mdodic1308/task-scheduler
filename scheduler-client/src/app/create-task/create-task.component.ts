@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ScheduledTask } from '../app.scheduled_task';
-import { TaskService } from '../task-service.service';
+import { InfoBoxService } from '../services/info-box.service';
+import { TaskService } from '../services/task-service.service';
 
 @Component({
   selector: 'app-create-task',
@@ -13,7 +14,7 @@ export class CreateTaskComponent {
   formGroup;
 
   constructor(
-    private formBuilder: FormBuilder, private taskService : TaskService
+    private formBuilder: FormBuilder, private taskService : TaskService, private infoBoxService: InfoBoxService
   ) {
     this.formGroup = this.formBuilder.group({
       name: '',
@@ -24,6 +25,9 @@ export class CreateTaskComponent {
 
   onSubmit(formData: { [x: string]: any; }) {
     this.taskService.createTask(new ScheduledTask(0, formData.name, formData.recurrency, formData.code))
-      .subscribe((data: ScheduledTask) => console.log("The new task with id "+ data.id +" is created."));
+      .subscribe((data: ScheduledTask) => {
+        let message : String = "The new task with id "+ data.id +" is created.";
+        this.infoBoxService.open("INFO", message);
+        console.log(message)});
   }
 }

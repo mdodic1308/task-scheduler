@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TasksDataSource } from './get-tasks.tasks-data-source';
-import { TaskService } from '../task-service.service';
+import { TaskService } from '../services/task-service.service';
 
 @Component({
   selector: 'app-get-tasks',

@@ -2,7 +2,7 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScheduledTask } from '../app.scheduled_task';
-import { TaskService } from '../task-service.service';
+import { TaskService } from '../services/task-service.service';
 import { finalize, catchError } from 'rxjs/operators';
 
 export class TasksDataSource implements DataSource<ScheduledTask> {

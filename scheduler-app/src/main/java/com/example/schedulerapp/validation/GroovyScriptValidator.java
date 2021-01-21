@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class GroovyScriptValidator implements ConstraintValidator<GroovyScriptValidation, String> {
 
     @Override
-    public void initialize(GroovyScriptValidation contactNumber) {
+    public void initialize(GroovyScriptValidation groovyScript) {
     }
 
     @Override
@@ -17,6 +17,7 @@ public class GroovyScriptValidator implements ConstraintValidator<GroovyScriptVa
             ConstraintValidatorContext cxt) {
         GroovyShell groovyShell = new GroovyShell();
         try {
+            System.out.println("CODE: "+code);
             groovyShell.parse(code);
             return true;
         } catch (CompilationFailedException e) {

@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { from, scheduled } from 'rxjs';
 import { ScheduledTask } from '../app.scheduled_task';
-import { TaskService } from '../task-service.service';
+import { InfoBoxService } from '../services/info-box.service';
+import { TaskService } from '../services/task-service.service';
 
 @Component({
   selector: 'app-update-task',
@@ -15,7 +14,7 @@ export class UpdateTaskComponent {
   formGroup;
 
   constructor(
-    private formBuilder: FormBuilder, private taskService : TaskService
+    private formBuilder: FormBuilder, private taskService : TaskService, private infoBoxService: InfoBoxService
   ) {
     this.formGroup = this.formBuilder.group({
       id:'',
@@ -27,6 +26,10 @@ export class UpdateTaskComponent {
 
   onSubmit(formData: { [x: string]: any; }) {
     this.taskService.updateTask(new ScheduledTask(formData.id, formData.name, formData.recurrency, formData.code))
-      .subscribe((data: ScheduledTask) => console.log("task with id:"+data.id+" is updated"));
+      .subscribe((data: ScheduledTask) => {
+        let message : String = "task with id:"+data.id+" is updated";
+        this.infoBoxService.open("INFO", message);
+        console.log("The task with id:"+data.id+" is updated");
+      })
   }
 }
