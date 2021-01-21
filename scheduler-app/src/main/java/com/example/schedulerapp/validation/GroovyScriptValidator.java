@@ -17,7 +17,6 @@ public class GroovyScriptValidator implements ConstraintValidator<GroovyScriptVa
             ConstraintValidatorContext cxt) {
         GroovyShell groovyShell = new GroovyShell();
         try {
-            System.out.println("CODE: "+code);
             groovyShell.parse(code);
             return true;
         } catch (CompilationFailedException e) {

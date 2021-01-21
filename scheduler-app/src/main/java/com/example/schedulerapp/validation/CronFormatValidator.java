@@ -16,7 +16,6 @@ public class CronFormatValidator implements ConstraintValidator<CronFormatValida
             ConstraintValidatorContext cxt) {
         try {
             CronExpression.parse(recurrency);
-            System.out.println("STRING   "+ recurrency);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
